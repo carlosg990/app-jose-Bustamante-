@@ -1,23 +1,21 @@
 # Liga MX App ⚽
 
-App web para fans de la Liga MX que incluye:
-
-- 🧩 Bracket de liguilla
-- 🎮 Fantasy de equipos
-- 📊 Quiniela de predicciones
-- ⏱ Resultados en tiempo real (en desarrollo)
+App web para:
+- Bracket (liguilla)
+- Fantasy de equipos
+- Quiniela
 
 ## Tecnologías
 - HTML
 - CSS
 - JavaScript
 
-## Instalación
-1. Clonar repo
-2. Abrir index.html
+## Funcionalidades
+- Seleccionar ganadores en bracket
+- Crear equipo fantasy
+- Hacer predicciones de quiniela
 
-## Roadmap
-- [ ] Integrar API de partidos
-- [ ] Login de usuario
-- [ ] Guardar datos en backend
-- [ ] Ranking de usuarios
+## Próximos pasos
+- Guardar datos en localStorage
+- Mejor UI
+- Agregar más partidos reales
