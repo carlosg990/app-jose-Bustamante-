@@ -3,7 +3,7 @@ const matches = [
   { id: 2, home: "Tigres", away: "Monterrey" }
 ];
 
-let predictions = {};
+let predictions = JSON.parse(localStorage.getItem("quiniela")) || {};
 
 function renderQuiniela() {
   const container = document.getElementById("quiniela");
@@ -12,11 +12,14 @@ function renderQuiniela() {
   matches.forEach(match => {
     const div = document.createElement("div");
 
+    const selected = predictions[match.id] || "Sin elegir";
+
     div.innerHTML = `
       <p>${match.home} vs ${match.away}</p>
-      <button onclick="predict(${match.id}, 'home')">Local</button>
-      <button onclick="predict(${match.id}, 'draw')">Empate</button>
-      <button onclick="predict(${match.id}, 'away')">Visitante</button>
+      <p>Tu pick: <strong>${selected}</strong></p>
+      <button onclick="predict(${match.id}, 'Local')">Local</button>
+      <button onclick="predict(${match.id}, 'Empate')">Empate</button>
+      <button onclick="predict(${match.id}, 'Visitante')">Visitante</button>
     `;
 
     container.appendChild(div);
@@ -25,7 +28,8 @@ function renderQuiniela() {
 
 function predict(matchId, result) {
   predictions[matchId] = result;
-  console.log(predictions);
+  localStorage.setItem("quiniela", JSON.stringify(predictions));
+  renderQuiniela();
 }
 
 renderQuiniela();
