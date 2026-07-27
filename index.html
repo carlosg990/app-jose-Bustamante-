@@ -12,21 +12,19 @@
     <h1>Liga MX App ⚽</h1>
 
     <nav>
-      <button onclick="showSection('bracket')">Bracket</button>
-      <button onclick="showSection('fantasy')">Fantasy</button>
-      <button onclick="showSection('quiniela')">Quiniela</button>
+      <button class="nav-btn active" onclick="showSection('bracket')">Bracket</button>
+      <button class="nav-btn" onclick="showSection('fantasy')">Fantasy</button>
+      <button class="nav-btn" onclick="showSection('quiniela')">Quiniela</button>
     </nav>
 
     <section id="bracket"></section>
     <section id="fantasy" style="display:none;"></section>
     <section id="quiniela" style="display:none;"></section>
-
   </div>
 
   <script src="js/app.js"></script>
   <script src="js/bracket.js"></script>
   <script src="js/fantasy.js"></script>
   <script src="js/quiniela.js"></script>
-
 </body>
 </html>
