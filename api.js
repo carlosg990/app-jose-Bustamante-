@@ -1,5 +1,5 @@
 // js/api.js
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "ff5d12243e17e33b9b4430d302145cdc";
 const BASE_URL = "https://v3.football.api-sports.io";
 
 async function fetchLigaMxMatches() {
