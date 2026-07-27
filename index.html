@@ -1,277 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Tasks</title>
-  <style>
-    /* --- Color palette: white, black, and blue accent --- */
-    :root {
-      --bg: #ffffff;
-      --text: #111111;
-      --muted: #666666;
-      --border: #e0e0e0;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --completed: #9ca3af;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 3rem 1rem;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 480px;
-    }
-
-    h1 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    /* --- Input row --- */
-    .input-row {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    #task-input {
-      flex: 1;
-      padding: 0.65rem 0.85rem;
-      font-size: 1rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    #task-input:focus {
-      border-color: var(--accent);
-    }
-
-    /* --- Buttons with subtle hover effect --- */
-    button {
-      padding: 0.65rem 1rem;
-      font-size: 0.95rem;
-      font-weight: 500;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-
-    button:active {
-      transform: scale(0.97);
-    }
-
-    #add-btn {
-      background-color: var(--accent);
-      color: white;
-    }
-
-    #add-btn:hover {
-      background-color: var(--accent-hover);
-    }
-
-    /* --- Task list --- */
-    #task-list {
-      list-style: none;
-    }
-
-    .task-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .task-item:last-child {
-      border-bottom: none;
-    }
-
-    /* Click the task text to toggle completed state */
-    .task-text {
-      flex: 1;
-      cursor: pointer;
-      user-select: none;
-      transition: color 0.2s;
-    }
-
-    .task-text:hover {
-      color: var(--accent);
-    }
-
-    .task-text.completed {
-      text-decoration: line-through;
-      color: var(--completed);
-    }
-
-    .task-text.completed:hover {
-      color: var(--completed);
-    }
-
-    .delete-btn {
-      background-color: transparent;
-      color: var(--muted);
-      padding: 0.35rem 0.6rem;
-      font-size: 0.85rem;
-    }
-
-    .delete-btn:hover {
-      background-color: #fee2e2;
-      color: #dc2626;
-    }
-
-    /* Empty state message */
-    .empty-message {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.95rem;
-      padding: 1rem 0;
-    }
-  </style>
+  <title>Liga MX App</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
   <div class="app">
-    <h1>Simple Tasks</h1>
+    <h1>Liga MX App ⚽</h1>
 
-    <div class="input-row">
-      <input
-        type="text"
-        id="task-input"
-        placeholder="What needs to be done?"
-        autocomplete="off"
-      >
-      <button id="add-btn" type="button">Add</button>
-    </div>
+    <nav>
+      <button onclick="showSection('bracket')">Bracket</button>
+      <button onclick="showSection('fantasy')">Fantasy</button>
+      <button onclick="showSection('quiniela')">Quiniela</button>
+    </nav>
 
-    <ul id="task-list"></ul>
+    <section id="bracket"></section>
+    <section id="fantasy" style="display:none;"></section>
+    <section id="quiniela" style="display:none;"></section>
+
   </div>
 
-  <script>
-    // --- DOM references ---
-    const taskInput = document.getElementById("task-input");
-    const addBtn = document.getElementById("add-btn");
-    const taskList = document.getElementById("task-list");
+  <script src="js/app.js"></script>
+  <script src="js/bracket.js"></script>
+  <script src="js/fantasy.js"></script>
+  <script src="js/quiniela.js"></script>
 
-    // Key used to store tasks in localStorage
-    const STORAGE_KEY = "simple-tasks";
-
-    // In-memory list of tasks: { id, text, completed }
-    let tasks = [];
-
-    // --- Load tasks from localStorage on page load ---
-    function loadTasks() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          tasks = JSON.parse(saved);
-        } catch {
-          tasks = [];
-        }
-      }
-      renderTasks();
-    }
-
-    // --- Save tasks to localStorage ---
-    function saveTasks() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-    }
-
-    // --- Add a new task ---
-    function addTask() {
-      const text = taskInput.value.trim();
-      if (!text) return;
-
-      tasks.push({
-        id: Date.now(),
-        text,
-        completed: false,
-      });
-
-      taskInput.value = "";
-      saveTasks();
-      renderTasks();
-      taskInput.focus();
-    }
-
-    // --- Toggle completed state ---
-    function toggleTask(id) {
-      const task = tasks.find((t) => t.id === id);
-      if (task) {
-        task.completed = !task.completed;
-        saveTasks();
-        renderTasks();
-      }
-    }
-
-    // --- Delete a task ---
-    function deleteTask(id) {
-      tasks = tasks.filter((t) => t.id !== id);
-      saveTasks();
-      renderTasks();
-    }
-
-    // --- Render the full task list ---
-    function renderTasks() {
-      taskList.innerHTML = "";
-
-      if (tasks.length === 0) {
-        const empty = document.createElement("p");
-        empty.className = "empty-message";
-        empty.textContent = "No tasks yet. Add one above!";
-        taskList.appendChild(empty);
-        return;
-      }
-
-      tasks.forEach((task) => {
-        const li = document.createElement("li");
-        li.className = "task-item";
-
-        const span = document.createElement("span");
-        span.className = "task-text" + (task.completed ? " completed" : "");
-        span.textContent = task.text;
-        span.addEventListener("click", () => toggleTask(task.id));
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.className = "delete-btn";
-        deleteBtn.type = "button";
-        deleteBtn.textContent = "Delete";
-        deleteBtn.addEventListener("click", () => deleteTask(task.id));
-
-        li.appendChild(span);
-        li.appendChild(deleteBtn);
-        taskList.appendChild(li);
-      });
-    }
-
-    // --- Event listeners ---
-    addBtn.addEventListener("click", addTask);
-
-    // Press Enter in the input to add a task
-    taskInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addTask();
-    });
-
-    // --- Initialize ---
-    loadTasks();
-  </script>
 </body>
 </html>
