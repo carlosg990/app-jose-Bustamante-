@@ -1,6 +1,6 @@
 const bracketData = [
-  { id: 1, team1: "América", team2: "Chivas" },
-  { id: 2, team1: "Tigres", team2: "Pumas" }
+  { id: 1, title: "Cuartos de Final 1", team1: "América", team2: "Chivas" },
+  { id: 2, title: "Cuartos de Final 2", team1: "Tigres", team2: "Pumas" }
 ];
 
 let bracketWinners = JSON.parse(localStorage.getItem("bracket")) || {};
@@ -16,9 +16,16 @@ function renderBracket() {
     const winner = bracketWinners[match.id];
 
     div.innerHTML = `
-      <p><strong>${match.team1} vs ${match.team2}</strong></p>
-      <button class="${winner === match.team1 ? 'selected' : ''}" onclick="pickWinner(${match.id}, '${match.team1}')">${match.team1}</button>
-      <button class="${winner === match.team2 ? 'selected' : ''}" onclick="pickWinner(${match.id}, '${match.team2}')">${match.team2}</button>
+      <small style="color: var(--text-muted);">${match.title}</small>
+      <div class="match-info">
+        <strong>${match.team1}</strong>
+        <span>vs</span>
+        <strong>${match.team2}</strong>
+      </div>
+      <div class="bracket-buttons">
+        <button class="${winner === match.team1 ? 'selected' : ''}" onclick="pickWinner(${match.id}, '${match.team1}')">Gana ${match.team1}</button>
+        <button class="${winner === match.team2 ? 'selected' : ''}" onclick="pickWinner(${match.id}, '${match.team2}')">Gana ${match.team2}</button>
+      </div>
     `;
 
     container.appendChild(div);
