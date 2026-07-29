@@ -19,7 +19,8 @@
 }
 
 body {
-  background-color: var(--bg-primary);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #022c22 100%);
+  background-attachment: fixed; /* Keeps the gradient static while scrolling */
   color: var(--text-main);
   min-height: 100vh;
   display: flex;
