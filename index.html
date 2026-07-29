@@ -3,29 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liga MX App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Liga MX Oráculo — simulador Monte Carlo de temporadas, Liguilla, Fantasy y Quiniela.">
+  <title>Liga MX Oráculo ⚽🔮</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
 
   <div class="app">
-    <h1>Liga MX App ⚽</h1>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">⚽</span>
+        <div>
+          <h1>Liga MX <span>Oráculo</span></h1>
+          <p class="tagline">Fan Command Center · Monte Carlo Engine</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" data-section="dashboard">Inicio</button>
+        <button class="nav-btn" data-section="standings">Tabla</button>
+        <button class="nav-btn" data-section="bracket">Liguilla</button>
+        <button class="nav-btn" data-section="fantasy">Fantasy</button>
+        <button class="nav-btn" data-section="quiniela">Quiniela</button>
+      </nav>
+    </header>
 
-    <nav>
-      <button class="nav-btn active" onclick="showSection('bracket')">Bracket</button>
-      <button class="nav-btn" onclick="showSection('fantasy')">Fantasy</button>
-      <button class="nav-btn" onclick="showSection('quiniela')">Quiniela</button>
-    </nav>
+    <main>
+      <section id="dashboard" class="app-section"></section>
+      <section id="standings" class="app-section"></section>
+      <section id="bracket" class="app-section"></section>
+      <section id="fantasy" class="app-section"></section>
+      <section id="quiniela" class="app-section"></section>
+    </main>
 
-    <section id="bracket"></section>
-    <section id="fantasy" style="display:none;"></section>
-    <section id="quiniela" style="display:none;"></section>
+    <footer class="footer">
+      <p>Hecho con ⚽ y matemáticas · Ratings y simulaciones ilustrativas, no oficiales.</p>
+    </footer>
   </div>
 
+  <script src="data.js"></script>
+  <script src="engine.js"></script>
   <script src="api.js"></script>
-  <script src="app.js"></script>
+  <script src="standings.js"></script>
   <script src="bracket.js"></script>
   <script src="fantasy.js"></script>
   <script src="quiniela.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
