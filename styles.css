@@ -92,6 +92,7 @@ section h2 {
 
 .card {
   background: var(--bg-card);
+  backdrop-filter: blur(8px); /* Enhances the glass effect */
   border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 1.25rem;
@@ -99,13 +100,16 @@ section h2 {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3); /* Green glow */
 }
+
+
 
 /* Match & Selection Styling */
 .match-info {
@@ -145,8 +149,9 @@ button:not(.nav-btn):hover {
 button.selected {
   background: var(--accent) !important;
   border-color: var(--accent) !important;
-  color: white;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); /* Glowing active state */
+  transform: scale(1.02); /* Slight pop when selected */
 }
 
 /* Fantasy Section */
@@ -172,4 +177,33 @@ button.selected {
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.9rem;
+}
+
+@keyframes slideFadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(15px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+section {
+  animation: slideFadeIn 0.4s ease-out forwards;
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 1.5rem 1rem;
+  }
+  
+  .match-buttons, .bracket-buttons {
+    grid-template-columns: 1fr; /* Stacks buttons on top of each other on very small screens */
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
 }
